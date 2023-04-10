@@ -1,11 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Input.css";
 
-const SelectionInput = ({ label }) => {
+const SelectionInput = ({ label, options }) => {
+  const [option, setOption] = useState("");
+
+  const handleChange = (e) => {
+    const selectedOption = e.target.value;
+    setOption(selectedOption);
+    console.log(option);
+  };
+
   return (
     <div className="input">
       <label for={label}>{label}</label>
-      <select name={label} id={label} />
+      <select onChange={handleChange}>
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
     </div>
   );
 };
