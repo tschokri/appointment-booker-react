@@ -20,21 +20,25 @@ function App() {
     phone: values["phone"],
   };
 
+  const appointmentData = {
+    service: values["service"],
+    location: values["location"],
+    date: values["date"],
+    time: values["time"],
+  };
+
   const headers = {
     "Content-Type": "application/json",
-    Service: values["service"],
-    Location: values["location"],
   };
 
   const handleClick = () => {
-    /*fetch("http://127.0.0.1:5500/test", {
-      method: "GET",
+    fetch("http://127.0.0.1:5500/bookappointment", {
+      method: "POST",
       headers: headers,
+      body: JSON.stringify({ userData, appointmentData }),
     })
       .then((response) => response.text())
       .then((text) => console.log(text));
-      */
-    console.log(userData);
   };
 
   return (
