@@ -2,32 +2,79 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import TextInput from "./components/TextInput";
 import SelectionInput from "./components/SelectionInput";
+import { serviceOptions, locationOptions } from "./Constants";
 
 function App() {
-  const serviceOptions = [
-    { value: "120686", label: "Anmeldung einer Wohnung" },
-    { value: "120703", label: "Personalausweis beantragen" },
-    { value: "324325", label: "Personalausweis abholen" },
-  ];
+  const [values, setValues] = useState({});
 
-  const locationOptions = [
-    { value: "122231", label: "Bürgeramt 1 (Kreuzberg), Yorckstraße" },
-    {
-      value: "327346",
-      label: "Bürgeramt 1 (Kreuzberg), Yorckstraße - Vorzugstermine",
-    },
-  ];
+  const handleChange = (key, value) => {
+    setValues((prevInputValues) => ({
+      ...prevInputValues,
+      [key]: value,
+    }));
+    console.log(values);
+  };
+
+  const userData = {
+    name: values["name"],
+    email: values["email"],
+    phone: values["phone"],
+  };
+
+  const headers = {
+    "Content-Type": "application/json",
+    Service: values["selectedService"],
+    Location: values["selectedLocation"],
+  };
+
+  const handleClick = () => {
+    fetch("http://127.0.0.1:5500/test", {
+      method: "GET",
+      headers: headers,
+    })
+      .then((response) => response.text())
+      .then((text) => console.log(text));
+  };
 
   return (
     <div className="App">
-      <TextInput label="Name" type="text" />
-      <TextInput label="Email" type="text" />
-      <TextInput label="Telefon" type="text" />
-      <SelectionInput label="Dienstleistung" options={serviceOptions} />
-      <SelectionInput label="Standort" options={locationOptions} />
-      <TextInput label="Datum" type="date" />
-      <TextInput put label="Uhrzeit" type="time" />
-      <button type="button" id="submit">
+      <TextInput
+        label="Name"
+        type="text"
+        onCustomChange={(value) => handleChange("name", value)}
+      />
+      <TextInput
+        label="Email"
+        type="text"
+        onCustomChange={(value) => handleChange("email", value)}
+      />
+      <TextInput
+        label="Telefon"
+        type="text"
+        onCustomChange={(value) => handleChange("phone", value)}
+      />
+      <SelectionInput
+        label="Dienstleistung"
+        options={serviceOptions}
+        onCustomChange={(value) => handleChange("service", value)}
+      />
+      <SelectionInput
+        label="Standort"
+        options={locationOptions}
+        onCustomChange={(value) => handleChange("location", value)}
+      />
+      <TextInput
+        label="Datum"
+        type="date"
+        onCustomChange={(value) => handleChange("date", value)}
+      />
+      <TextInput
+        put
+        label="Uhrzeit"
+        type="time"
+        onCustomChange={(value) => handleChange("time", value)}
+      />
+      <button type="button" id="submit" onClick={handleClick}>
         Buchen
       </button>
     </div>
