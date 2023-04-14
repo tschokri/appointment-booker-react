@@ -1,15 +1,7 @@
-import { useEffect, useState } from "react";
 import React from "react";
+import "./Input.css";
 
 const TextInput = ({ label, type, onCustomChange }) => {
-  const [inputValue, setInputValue] = useState("");
-
-  const handleChange = (e) => {
-    const changedData = e.target.value;
-    setInputValue(changedData);
-    onCustomChange(changedData);
-  };
-
   return (
     <div className="input">
       <label htmlFor={label}>{label}</label>
@@ -17,8 +9,7 @@ const TextInput = ({ label, type, onCustomChange }) => {
         type={type}
         name={label}
         id={label}
-        value={inputValue}
-        onChange={handleChange}
+        onChange={(e) => onCustomChange(e.target.value)}
       />
     </div>
   );

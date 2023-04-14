@@ -8,11 +8,10 @@ function App() {
   const [values, setValues] = useState({});
 
   const handleChange = (key, value) => {
-    setValues((prevInputValues) => ({
-      ...prevInputValues,
+    setValues((prevState) => ({
+      ...prevState,
       [key]: value,
     }));
-    console.log(values);
   };
 
   const userData = {
@@ -23,17 +22,19 @@ function App() {
 
   const headers = {
     "Content-Type": "application/json",
-    Service: values["selectedService"],
-    Location: values["selectedLocation"],
+    Service: values["service"],
+    Location: values["location"],
   };
 
   const handleClick = () => {
-    fetch("http://127.0.0.1:5500/test", {
+    /*fetch("http://127.0.0.1:5500/test", {
       method: "GET",
       headers: headers,
     })
       .then((response) => response.text())
       .then((text) => console.log(text));
+      */
+    console.log(userData);
   };
 
   return (
