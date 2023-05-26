@@ -30,9 +30,18 @@ async function book(userData, appointmentData) {
         appointmentData.service +
         "&herkunft=1"
     );
-
-    //await browser.close();
   } catch (error) {
     console.error("Error scraping data:", error);
   }
+
+  let appointmentBooked = false;
+  let monthElement = selectElementContaining(appointmentData.month);
+  while (!appointmentBooked) {
+    await page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
+    let dayElement = selectElementContaining(appointmentData.day);
+  }
 }
+
+const selectElementContaining = async (day) => {
+  return await page.$x("//a[text()[contains(., '" + day + "')]]");
+};
