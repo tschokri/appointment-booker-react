@@ -5,4 +5,4 @@ RUN npm install
 COPY src/ ./src/
 COPY public/ ./public/
 EXPOSE 4173
-CMD ["npm", "run", "preview"]
+CMD ["npm", "run", "start"]
